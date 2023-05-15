@@ -1,4 +1,4 @@
-FIRST IN FIRST OUT
+FIRST FIT
 INPUT:
 #include<stdio.h>
 int main()
