@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+typedef struct Block {
+    int data;
+    struct Block* next;
+} Block;
+Block* createBlock(int data) {
+    Block* newBlock = (Block*)malloc(sizeof(Block));
+    newBlock->data = data;
+    newBlock->next = NULL;
+    return newBlock;
+}
+void addBlock(Block** head, int data) {
+    Block* newBlock = createBlock(data);
+    if (*head == NULL) {
+        *head = newBlock;
+    } else {
+        Block* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newBlock;
+    }
+}
+void displayBlocks(Block* head) {
+    Block* current = head;
+    while (current != NULL) {
+        printf("%d -> ", current->data);
+        current = current->next;
+    }
+    printf("NULL\n");
+}
+void simulateFileAllocation() {
+    Block* directory = NULL;
+    Block* file1 = NULL;
+    Block* file2 = NULL;
+    addBlock(&file1, 1);
+    addBlock(&file1, 2);
+    addBlock(&file1, 3);
+    addBlock(&file2, 4);
+    addBlock(&file2, 5);
+    addBlock(&file2, 6);
+    directory = file1;
+    Block* current = file1;
+    while (current->next != NULL) {
+        current = current->next;
+    }
+    current->next = file2;
+    printf("Directory:\n");
+    displayBlocks(directory);
+    printf("File 1:\n");
+    displayBlocks(file1);
+    printf("File 2:\n");
+    displayBlocks(file2);
+}
+int main() {
+    simulateFileAllocation();
+    return 0;
+}
